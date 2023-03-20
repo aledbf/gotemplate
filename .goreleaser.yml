@@ -2,7 +2,6 @@
 builds:
   - binary: gotemplate
     goos:
-      - windows
       - darwin
       - linux
     goarch:
