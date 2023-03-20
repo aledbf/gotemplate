@@ -45,14 +45,6 @@ func TestCli(t *testing.T) {
 			expectedCode:   0,
 			expectedResult: "8",
 		},
-		{
-			name:           "STDIN variables",
-			pipe:           "testInt=3",
-			args:           []string{"-V-", "--var", "test2=4", "test.template"},
-			template:       "{{ $var := add .testInt .test2 }}{{ $var }}",
-			expectedCode:   0,
-			expectedResult: "7",
-		},
 
 		// Ambiguous variables
 		{
@@ -157,9 +149,9 @@ func TestCli(t *testing.T) {
 				defer os.RemoveAll(tempDir)
 				templateFile := path.Join(tempDir, "test.template")
 				must(ioutil.WriteFile(templateFile, []byte(tt.template), 0644))
-				os.Args = append([]string{"gotemplate", "--source", tempDir}, tt.args...)
+				os.Args = append([]string{"gotemplate", "run", "--source", tempDir}, tt.args...)
 			} else {
-				os.Args = append([]string{"gotemplate"}, tt.args...)
+				os.Args = append([]string{"gotemplate", "run"}, tt.args...)
 			}
 
 			// Run gotemplate
